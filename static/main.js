@@ -10,3 +10,7 @@ const sendMessage = () =>{
 socket.on("message", (data) =>{
     document.getElementById("header").innerHTML = data
 })
+
+window.onload = () => {
+    scenery = new Scenery();
+}
