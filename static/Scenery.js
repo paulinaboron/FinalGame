@@ -26,6 +26,7 @@ class Scenery {
 
         this.makeFloor()
         this.makeNature()
+        this.makeBugs()
 
 
         this.render()
@@ -48,7 +49,9 @@ class Scenery {
         const plane = new THREE.Mesh(geometry, material);
         plane.rotation.x = Math.PI / 2;
         this.scene.add(plane);
+    }
 
+    makeBugs() {
 
         const loader = new THREE.GLTFLoader();
         let scena = this.scene
@@ -56,18 +59,17 @@ class Scenery {
         loader.load('models/scene.gltf', function (gltf) {
 
             console.log("ew lista animacji ", gltf.scene.animations)
+            console.log(gltf.scene);
 
             gltf.scene.traverse(function (child) {
-                // tu można wykonać dowolną operację dla każdego mesha w modelu
                 if (child.isMesh) {
                     console.log(child)
                 }
 
             });
-            // dodanie do sceny
             scena.add(gltf.scene);
             // gltf.scene.scale.set(3, 3, 3)
-            // gltf.scene.position.y = 3
+            gltf.scene.rotation.y = 2
 
         }, undefined, function (error) {
             console.error(error);
