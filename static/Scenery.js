@@ -6,7 +6,7 @@ class Scenery {
 
         // Camera
         this.camera = new THREE.PerspectiveCamera(45, 4 / 3, 0.1, 10000);
-        this.camera.position.set(30, 28, 28)
+        this.camera.position.set(15, 15, 15)
         this.camera.lookAt(this.scene.position)
 
         // Renderer
@@ -17,7 +17,7 @@ class Scenery {
 
         // Light
         this.light = new THREE.PointLight(0xffffff, 1);
-        this.light.position.set(0, 30, 0);
+        this.light.position.set(10, 10, 10);
         this.scene.add(this.light);
 
         // Axes
@@ -25,6 +25,7 @@ class Scenery {
         this.scene.add(axes)
 
         this.makeFloor()
+        this.makeNature()
 
 
         this.render()
@@ -47,6 +48,61 @@ class Scenery {
         const plane = new THREE.Mesh(geometry, material);
         plane.rotation.x = Math.PI / 2;
         this.scene.add(plane);
+
+
+        const loader = new THREE.GLTFLoader();
+        let scena = this.scene
+
+        loader.load('models/scene.gltf', function (gltf) {
+
+            console.log("ew lista animacji ", gltf.scene.animations)
+
+            gltf.scene.traverse(function (child) {
+                // tu można wykonać dowolną operację dla każdego mesha w modelu
+                if (child.isMesh) {
+                    console.log(child)
+                }
+
+            });
+            // dodanie do sceny
+            scena.add(gltf.scene);
+            // gltf.scene.scale.set(3, 3, 3)
+            // gltf.scene.position.y = 3
+
+        }, undefined, function (error) {
+            console.error(error);
+        });
+    }
+
+
+    makeNature() {
+        const body = JSON.stringify({ x: 1 })
+        const headers = { "Content-Type": "application/json" }
+
+        fetch("/GET_MODEL_FILES", { method: "post", body, headers })
+            .then(response => response.json())
+            .then(
+                data => {
+                    const loader = new THREE.GLTFLoader();
+                    let scena = this.scene
+                    data.forEach(e => {
+
+                        let path = 'models/nature/' + e;
+
+                        loader.load(path, function (gltf) {
+
+                            // dodanie do sceny
+                            scena.add(gltf.scene);
+                            gltf.scene.scale.set(3, 3, 3)
+                            gltf.scene.position.x = (Math.random() * 20) - 10
+                            gltf.scene.position.z = (Math.random() * 20) - 10
+
+                        }, undefined, function (error) {
+                            console.error(error);
+                        });
+                    });
+                }
+            )
     }
 
     render = () => {
