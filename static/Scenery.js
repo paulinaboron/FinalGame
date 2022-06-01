@@ -16,7 +16,7 @@ class Scenery {
         document.getElementById("root").append(this.renderer.domElement);
 
         // Light
-        this.light = new THREE.PointLight(0xffffff, 1);
+        this.light = new THREE.PointLight(0xffffff, .2);
         this.light.position.set(10, 10, 10);
         this.scene.add(this.light);
 

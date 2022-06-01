@@ -1,12 +1,139 @@
-*{
+
+.helper{
+    position: absolute;
+}
+
+body {
+    background-color: rgb(0, 0, 0);
+    font-family: 'Quicksand', sans-serif;
+
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     overflow: hidden;
 }
 
-
-
-.helper{
+i{
+    color: white;
+    text-shadow:
+        0 0 4px #fff,
+        0 0 11px #fff,
+        0 0 40px #0fa,
+        0 0 80px #0fa,
+        0 0 90px #0fa;
     position: absolute;
+    left: calc(50% - 40px);
+    top: 800px;
+}
+
+.neonHeader {
+    color: #fff;
+    font-size: 50pt;
+    animation: flicker 1.5s infinite alternate;
+}
+
+.neonText {
+    color: #fff;
+    font-size: 50pt;
+    text-shadow:
+        0 0 4px #fff,
+        0 0 11px #fff,
+        0 0 19px #fff,
+        0 0 40px #0fa,
+        0 0 80px #0fa,
+        0 0 90px #0fa,
+        0 0 100px #0fa,
+        0 0 150px #0fa;
+}
+
+#playButton {
+    transition: text-shadow .5s;
+}
+
+#playButton:hover {
+    text-shadow:
+        0 0 4px #fff,
+        0 0 11px #fff,
+        0 0 19px #fff,
+        0 0 40px #bc13fe,
+        0 0 80px #bc13fe,
+        0 0 90px #bc13fe,
+        0 0 100px #bc13fe,
+        0 0 150px #bc13fe;
+}
+
+#neonBox {
+    position: absolute;
+    top: 150px;
+    left: calc(50% - 250px);
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 0.2rem solid #fff;
+    border-radius: 2rem;
+    padding: 0.4em;
+    box-shadow: 0 0 .2rem #fff,
+        0 0 .2rem #fff,
+        0 0 2rem rgb(0, 238, 255),
+        0 0 0.8rem rgb(0, 238, 255),
+        0 0 2.8rem rgb(0, 238, 255),
+        inset 0 0 1.3rem rgb(0, 238, 255);
+    transition: box-shadow 10s;
+}
+
+#neonBox:hover {
+    box-shadow:
+        0 0 .2rem #fff,
+        0 0 .2rem #fff,
+        0 0 2rem #bc13fe,
+        0 0 0.8rem #bc13fe,
+        0 0 2.8rem #bc13fe,
+        inset 0 0 1.3rem #bc13fe;
+}
+
+#usernameInput {
+    border: 0.2rem solid #fff;
+    border-radius: 2rem;
+    width: 250px;
+    background-color: rgba(0, 0, 0, 0);
+    padding: 20px;
+    color: white;
+    text-align: center;
+    box-shadow:
+        0 0 11px #fff,
+        0 0 50px #0fa,
+        inset 0 0 .5rem #0fa;
+    transition: 2s;
+}
+
+#usernameInput:focus{
+    box-shadow:
+    0 0 11px #fff,
+    0 0 50px #bc13fe,
+    inset 0 0 .5rem #bc13fe;
+}
+
+
+/* Flickering animation */
+@keyframes flicker {
+    0%, 18%, 22%, 25%, 53%, 100% {
+        text-shadow:
+            0 0 4px #fff,
+            0 0 11px #fff,
+            0 0 19px #fff,
+            0 0 40px #0fa,
+            0 0 80px #0fa,
+            0 0 90px #0fa,
+            0 0 100px #0fa,
+            0 0 150px #0fa;
+    }
+    20%, 24% {
+        text-shadow: none;
+    }
+}
+
+.hidden{
+    display: none;
 }

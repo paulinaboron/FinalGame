@@ -6,25 +6,44 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎇 Fireflies 🎇</title>
+
+    <!-- Style -->
     <link rel="stylesheet" href="./style.css">
 
     <script src="./libs/three.js"></script>
     <script src="https://threejs.org/examples/js/loaders/GLTFLoader.js"></script>
 
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <script src="./Main.js"></script>
     <script src="./Net.js"></script>
+    <script src="./Ui.js"></script>
     <script src="./Scenery.js"></script>
     
 </head>
 
 <body>
-    <div class="helper">
+    <!-- <div class="helper">
         <h1 id="header">Hjdncwdcnd</h1>
 
-    </div>
+    </div> -->
 
 
     <div id="root"></div>
+
+    <div id="neonBox">
+        <p class="neonHeader">Logowanie</p>
+        <input autocomplete="off" type="text" name="username" id="usernameInput">
+        <p class="neonText" id="playButton">Graj</p>
+    </div>
+
+    <i class="fa fa-spinner fa-5x fa-pulse hidden" id="spinnerIcon"></i>
 
 </body>
 
