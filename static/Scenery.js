@@ -57,19 +57,17 @@ class Scenery {
         let scena = this.scene
 
         loader.load('models/scene.gltf', function (gltf) {
-
-            console.log("ew lista animacji ", gltf.scene.animations)
-            console.log(gltf.scene);
-
-            gltf.scene.traverse(function (child) {
-                if (child.isMesh) {
-                    console.log(child)
-                }
-
-            });
-            scena.add(gltf.scene);
+            // console.log("ew lista animacji ", gltf.scene.animations)
+            // console.log(gltf.scene);
+            // gltf.scene.traverse(function (child) {
+            //     if (child.isMesh) {
+            //         console.log(child)
+            //     }
+            // });
             // gltf.scene.scale.set(3, 3, 3)
+            
             gltf.scene.rotation.y = 2
+            scena.add(gltf.scene);
 
         }, undefined, function (error) {
             console.error(error);
