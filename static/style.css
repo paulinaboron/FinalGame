@@ -81,7 +81,7 @@ i{
 
 #waitingBox{
     position: absolute;
-    top: 150px;
+    top: 250px;
     left: calc(50% - 250px);
     display: flex;
     flex-direction: column;

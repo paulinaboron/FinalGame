@@ -8,6 +8,7 @@ class Scenery {
         this.camera = new THREE.PerspectiveCamera(45, 4 / 3, 0.1, 10000);
         this.camera.position.set(15, 15, 15)
         this.camera.lookAt(this.scene.position)
+        this.angle = 1
 
         // Renderer
         this.renderer = new THREE.WebGLRenderer();
@@ -17,7 +18,7 @@ class Scenery {
 
         // Light
         this.light = new THREE.PointLight(0xffffff, .2);
-        this.light.position.set(10, 10, 10);
+        this.light.position.set(0, 10, 0);
         this.scene.add(this.light);
 
         // Axes
@@ -65,7 +66,7 @@ class Scenery {
             //     }
             // });
             // gltf.scene.scale.set(3, 3, 3)
-            
+
             gltf.scene.rotation.y = 2
             scena.add(gltf.scene);
 
@@ -108,6 +109,17 @@ class Scenery {
     render = () => {
         requestAnimationFrame(this.render);
         this.renderer.render(this.scene, this.camera);
+
+        this.camera.position.applyQuaternion(new THREE.Quaternion().setFromAxisAngle(
+            new THREE.Vector3(0, 1, 0), // The positive y-axis
+            0.001 // The amount of rotation to apply this time
+        ));
+        this.camera.lookAt(this.scene.position);
+
+        // if(this.light.intensity < 1){
+        //     this.light.intensity += 0.008
+        // }
+         
 
 
         // Update przy zmanie wielkości okna
