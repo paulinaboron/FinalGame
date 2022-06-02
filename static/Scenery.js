@@ -1,36 +1,8 @@
 class Scenery {
 
-    constructor() {
-
-        this.scene = new THREE.Scene()
-
-        // Camera
-        this.camera = new THREE.PerspectiveCamera(45, 4 / 3, 0.1, 10000);
-        this.camera.position.set(15, 15, 15)
-        this.camera.lookAt(this.scene.position)
-        this.angle = 1
-
-        // Renderer
-        this.renderer = new THREE.WebGLRenderer();
-        this.renderer.setClearColor(0x0);
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
-        document.getElementById("root").append(this.renderer.domElement);
-
-        // Light
-        this.light = new THREE.PointLight(0xffffff, .2);
-        this.light.position.set(0, 10, 0);
-        this.scene.add(this.light);
-
-        // Axes
-        const axes = new THREE.AxesHelper(1000)
-        this.scene.add(axes)
-
-        this.makeFloor()
-        this.makeNature()
-        this.makeBugs()
-
-
-        this.render()
+    constructor(scene) {
+        this.scene = scene
+        console.log('scenery');
     }
 
 
@@ -56,6 +28,15 @@ class Scenery {
 
         const loader = new THREE.GLTFLoader();
         let scena = this.scene
+        let bugPositions
+
+        fetch("/GET_BUG_POSITIONS", { method: "post" })
+            .then(response => response.json())
+            .then(
+                data => {
+                    console.log(data);
+                    bugPositions = data
+                })
 
         loader.load('models/scene.gltf', function (gltf) {
             // console.log("ew lista animacji ", gltf.scene.animations)
@@ -65,14 +46,24 @@ class Scenery {
             //         console.log(child)
             //     }
             // });
-            // gltf.scene.scale.set(3, 3, 3)
 
-            gltf.scene.rotation.y = 2
-            scena.add(gltf.scene);
+            bugPositions.forEach(e => {
+                const clone = gltf.scene.clone();
+                clone.scale.set(.5, .5, .5)
+                clone.position.set(e[0], 4, e[1])
+                scena.add(clone);
+
+                let bugLight = new BugLight('iiii', e[0], e[1])
+                scena.add(bugLight)
+            });
+
 
         }, undefined, function (error) {
             console.error(error);
         });
+
+
+
     }
 
 
@@ -93,10 +84,19 @@ class Scenery {
                         loader.load(path, function (gltf) {
 
                             // dodanie do sceny
-                            scena.add(gltf.scene);
                             gltf.scene.scale.set(3, 3, 3)
-                            gltf.scene.position.x = (Math.random() * 20) - 10
-                            gltf.scene.position.z = (Math.random() * 20) - 10
+                            gltf.scene.position.x = (Math.random() * 100) - 50
+                            gltf.scene.position.z = (Math.random() * 100) - 50
+                            scena.add(gltf.scene);
+
+                            // klonowanie 12 razy
+                            for (let i = 0; i < 12; i++) {
+                                const clone = gltf.scene.clone();
+                                clone.scale.set(3, 3, 3)
+                                clone.position.x = (Math.random() * 100) - 50
+                                clone.position.z = (Math.random() * 100) - 50
+                                scena.add(clone);
+                            }
 
                         }, undefined, function (error) {
                             console.error(error);
@@ -106,27 +106,5 @@ class Scenery {
             )
     }
 
-    render = () => {
-        requestAnimationFrame(this.render);
-        this.renderer.render(this.scene, this.camera);
-
-        this.camera.position.applyQuaternion(new THREE.Quaternion().setFromAxisAngle(
-            new THREE.Vector3(0, 1, 0), // The positive y-axis
-            0.001 // The amount of rotation to apply this time
-        ));
-        this.camera.lookAt(this.scene.position);
-
-        // if(this.light.intensity < 1){
-        //     this.light.intensity += 0.008
-        // }
-         
-
-
-        // Update przy zmanie wielkości okna
-
-        // this.camera.aspect = window.innerWidth / window.innerHeight;
-        // this.camera.updateProjectionMatrix();
-        // this.renderer.setSize(window.innerWidth, window.innerHeight);
-    }
 
 }

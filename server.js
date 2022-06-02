@@ -5,6 +5,20 @@ const fs = require('fs');
 var path = require("path")
 const directoryPath = path.join(__dirname, 'static/models/nature');
 
+const bugPositions = [
+    [-40, -40],
+    [-40, 40],
+    [40, 40],
+    [40, -40],
+    [10, 10],
+    [-3, 30],
+    [2, -15],
+    [30, -20],
+    [-30, 3],
+    [-15, 10],
+]
+
+
 app.use(express.static('static'))
 
 
@@ -23,6 +37,10 @@ app.post("/GET_MODEL_FILES", (req, res)=>{
 
         res.send(files)
     });
+})
+
+app.post("/GET_BUG_POSITIONS", (req, res)=>{
+    res.send(bugPositions)
 })
 
 server.listen(3000, ()=>{

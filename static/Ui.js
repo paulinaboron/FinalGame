@@ -11,6 +11,7 @@ class Ui {
         console.log(username);
         if(username != ""){
             document.getElementById("neonBox").classList.add("hidden")
+            document.getElementById("usernameInput").classList.add("hidden")
             document.getElementById("waitingBox").classList.remove("hidden")
             
         }
