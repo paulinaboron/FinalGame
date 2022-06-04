@@ -13,6 +13,8 @@
     <!-- Three.js -->
     <script src="./libs/three.js"></script>
     <script src="https://threejs.org/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="./libs/fflate.min.js"></script>
+    <script src="https://threejs.org/examples/js/loaders/FBXLoader.js"></script>
 
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,21 +43,30 @@
 
     </div> -->
 
+    <div id="infoIcon"><i class="fa fa-info fa-2x"></i></div>
 
-    <div id="root"></div>
+    <div id="info" class="hidden">
+        <p>Move: <b>WSAD</b></p>
+        <p>Look: <b>MOUSE</b></p>
+        <p>Show Cursor: <b>ESC</b></p>
+        <p>Stop: <b>BCKSPC</b></p>
+        <p>Resume: <b>CLICK</b></p>
+    </div>
+    
 
     <div id="neonBox">
-        <p class="neonHeader">Logowanie</p>
+        <p class="neonHeader">Login</p>
         <input autocomplete="off" type="text" name="username" id="usernameInput">
         <p class="neonText" id="playButton">Graj</p>
     </div>
 
-    <!-- <div id="waitingBox" class="hidden">
-        <p class="neonText">Czekaj...</p>
+    <div id="waitingBox" class="hidden">
+        <p class="neonText">Wait...</p>
         <i class="fa fa-spinner fa-5x fa-pulse" id="spinnerIcon"></i>
-    </div> -->
+    </div>
     
 
+    <div id="root"></div>
+    
 </body>
-
 </html>

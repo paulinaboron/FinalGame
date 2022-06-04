@@ -65,7 +65,7 @@ class Game {
     }
 
     onKeyDown(event) {
-        console.log(event.code);
+        // console.log(event.code);
         switch (event.code) {
             case 'KeyW':
                 this.controls.moveForward(0.25)

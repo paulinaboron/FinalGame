@@ -26,8 +26,8 @@ class Scenery {
 
     makeBugs() {
 
-        const loader = new THREE.GLTFLoader();
-        let scena = this.scene
+        let scene = this.scene
+        let cloneFbx = this.cloneFbx
         let bugPositions
 
         fetch("/GET_BUG_POSITIONS", { method: "post" })
@@ -38,30 +38,29 @@ class Scenery {
                     bugPositions = data
                 })
 
-        loader.load('models/scene.gltf', function (gltf) {
-            // console.log("ew lista animacji ", gltf.scene.animations)
-            // console.log(gltf.scene);
-            // gltf.scene.traverse(function (child) {
-            //     if (child.isMesh) {
-            //         console.log(child)
-            //     }
-            // });
+        const loader = new THREE.FBXLoader();
+        loader.load('models/Wasp.fbx', function (object) {
+
+            // Animacje
+            // let mixer = new THREE.AnimationMixer(object);
+            // console.log("animacje modelu", object.animations)
+            // const action = mixer.clipAction(object.animations[1]);
+            // action.play();
 
             bugPositions.forEach(e => {
-                const clone = gltf.scene.clone();
-                clone.scale.set(.5, .5, .5)
+                let clone = cloneFbx(object)
+                clone.scale.set(.005, .005, .005)
                 clone.position.set(e[0], 4, e[1])
-                scena.add(clone);
+                scene.add(clone);
 
                 let bugLight = new BugLight('iiii', e[0], e[1])
-                scena.add(bugLight)
+                scene.add(bugLight)
             });
 
 
         }, undefined, function (error) {
             console.error(error);
         });
-
 
 
     }
@@ -104,6 +103,57 @@ class Scenery {
                     });
                 }
             )
+    }
+
+
+    cloneFbx = (fbx) => {
+        const clone = fbx.clone(true)
+        clone.animations = fbx.animations
+        clone.skeleton = { bones: [] }
+
+        const skinnedMeshes = {}
+
+        fbx.traverse(node => {
+            if (node.isSkinnedMesh) {
+                skinnedMeshes[node.name] = node
+            }
+        })
+
+        const cloneBones = {}
+        const cloneSkinnedMeshes = {}
+
+        clone.traverse(node => {
+            if (node.isBone) {
+                cloneBones[node.name] = node
+            }
+
+            if (node.isSkinnedMesh) {
+                cloneSkinnedMeshes[node.name] = node
+            }
+        })
+
+        for (let name in skinnedMeshes) {
+            const skinnedMesh = skinnedMeshes[name]
+            const skeleton = skinnedMesh.skeleton
+            const cloneSkinnedMesh = cloneSkinnedMeshes[name]
+
+            const orderedCloneBones = []
+
+            for (let i = 0; i < skeleton.bones.length; i++) {
+                const cloneBone = cloneBones[skeleton.bones[i].name]
+                orderedCloneBones.push(cloneBone)
+            }
+
+            cloneSkinnedMesh.bind(
+                new THREE.Skeleton(orderedCloneBones, skeleton.boneInverses),
+                cloneSkinnedMesh.matrixWorld)
+
+            // For animation to work correctly:
+            clone.skeleton.bones.push(cloneSkinnedMesh)
+            clone.skeleton.bones.push(...orderedCloneBones)
+        }
+
+        return clone
     }
 
 

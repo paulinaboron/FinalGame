@@ -79,6 +79,16 @@ i{
     transition: box-shadow 10s;
 }
 
+#neonBox:hover {
+    box-shadow:
+        0 0 .2rem #fff,
+        0 0 .2rem #fff,
+        0 0 2rem #bc13fe,
+        0 0 0.8rem #bc13fe,
+        0 0 2.8rem #bc13fe,
+        inset 0 0 1.3rem #bc13fe;
+}
+
 #waitingBox{
     position: absolute;
     top: 250px;
@@ -90,15 +100,7 @@ i{
     width: 500px;
 }
 
-#neonBox:hover {
-    box-shadow:
-        0 0 .2rem #fff,
-        0 0 .2rem #fff,
-        0 0 2rem #bc13fe,
-        0 0 0.8rem #bc13fe,
-        0 0 2.8rem #bc13fe,
-        inset 0 0 1.3rem #bc13fe;
-}
+
 
 #usernameInput {
     border: 0.2rem solid #fff;
@@ -120,6 +122,26 @@ i{
     0 0 11px #fff,
     0 0 50px #bc13fe,
     inset 0 0 .5rem #bc13fe;
+}
+
+#infoIcon{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    padding: 25px;
+}
+
+#info{
+    position: absolute;
+    color: #fff;
+    top: 55px;
+    left: 55px;
+    line-height: 15px;
+    font-size: 16px;
+}
+
+#infoIcon:hover ~ #info{
+    visibility: visible;
 }
 
 

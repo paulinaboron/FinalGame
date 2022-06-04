@@ -7,14 +7,16 @@ class Ui {
     }
 
     playButtonClick(){
-        // let username = document.getElementById("usernameInput").value
-        // console.log(username);
-        // if(username != "abc123"){
+        let username = document.getElementById("usernameInput").value
+        console.log(username);
+        if(username == ''){     // do testowania (nic nie wpisuj do inputa), potem zmienić na logowanie
             document.getElementById("neonBox").classList.add("hidden")
-            // document.getElementById("waitingBox").classList.remove("hidden")
             game.startGame()
             
-        // }
+        }else{
+            document.getElementById("neonBox").classList.add("hidden")
+            document.getElementById("waitingBox").classList.remove("hidden")
+        }
     }
 
 }
