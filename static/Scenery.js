@@ -5,13 +5,13 @@ class Scenery {
         console.log('scenery');
     }
 
-
+    // Dodanie płaszczyzny z trawą do sceny
     makeFloor() {
-        const geometry = new THREE.PlaneGeometry(100, 100);
+        const geometry = new THREE.PlaneGeometry(200, 200);
         const texture = new THREE.TextureLoader().load("./imgs/grass.jpg");
         texture.wrapS = THREE.RepeatWrapping;
         texture.wrapT = THREE.RepeatWrapping;
-        texture.repeat.set(6, 6);
+        texture.repeat.set(15, 15);
         const material = new THREE.MeshPhongMaterial({
             color: 0xffffff,
             specular: 0x222222,
@@ -24,8 +24,8 @@ class Scenery {
         this.scene.add(plane);
     }
 
+    // Dodanie modeli robaczków i światełek do sceny
     makeBugs() {
-
         let scene = this.scene
         let cloneFbx = this.cloneFbx
         let bugPositions
@@ -51,21 +51,20 @@ class Scenery {
                 let clone = cloneFbx(object)
                 clone.scale.set(.005, .005, .005)
                 clone.position.set(e[0], 4, e[1])
+                clone.name = "Bug" + e[0] + e[1]
                 scene.add(clone);
 
-                let bugLight = new BugLight('iiii', e[0], e[1])
+                let bugLightName = "Light" + e[0] + e[1]
+                let bugLight = new BugLight(bugLightName, e[0], e[1])
                 scene.add(bugLight)
             });
-
 
         }, undefined, function (error) {
             console.error(error);
         });
-
-
     }
 
-
+    // Dodanie modeli drzew, krzewów itp do sceny
     makeNature() {
         const body = JSON.stringify({ x: 1 })
         const headers = { "Content-Type": "application/json" }
@@ -105,7 +104,7 @@ class Scenery {
             )
     }
 
-
+    // Klonowanie modelu FBX
     cloneFbx = (fbx) => {
         const clone = fbx.clone(true)
         clone.animations = fbx.animations
@@ -114,22 +113,16 @@ class Scenery {
         const skinnedMeshes = {}
 
         fbx.traverse(node => {
-            if (node.isSkinnedMesh) {
-                skinnedMeshes[node.name] = node
-            }
+            if (node.isSkinnedMesh) skinnedMeshes[node.name] = node
         })
 
         const cloneBones = {}
         const cloneSkinnedMeshes = {}
 
         clone.traverse(node => {
-            if (node.isBone) {
-                cloneBones[node.name] = node
-            }
+            if (node.isBone) cloneBones[node.name] = node
 
-            if (node.isSkinnedMesh) {
-                cloneSkinnedMeshes[node.name] = node
-            }
+            if (node.isSkinnedMesh) cloneSkinnedMeshes[node.name] = node
         })
 
         for (let name in skinnedMeshes) {

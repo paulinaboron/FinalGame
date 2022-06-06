@@ -34,17 +34,13 @@
     <script src="./Scenery.js"></script>
     <script src="./BugLight.js"></script>
     <script src="./Controls.js"></script>
-    
+
 </head>
 
 <body>
-    <!-- <div class="helper">
-        <h1 id="header">Hjdncwdcnd</h1>
 
-    </div> -->
-
+    <!-- Informacje w rogu -->
     <div id="infoIcon"><i class="fa fa-info fa-2x"></i></div>
-
     <div id="info" class="hidden">
         <p>Move: <b>WSAD</b></p>
         <p>Look: <b>MOUSE</b></p>
@@ -52,21 +48,30 @@
         <p>Stop: <b>BCKSPC</b></p>
         <p>Resume: <b>CLICK</b></p>
     </div>
-    
 
+    <!-- Punkty w rogu -->
+    <div id="scoreDiv" class="hidden">
+        <p id="score">0/5</p>
+        <i class="fa fa-bug fa-2x"></i>
+        
+    </div>
+
+    <!-- Logowanie -->
     <div id="neonBox">
         <p class="neonHeader">Login</p>
         <input autocomplete="off" type="text" name="username" id="usernameInput">
-        <p class="neonText" id="playButton">Graj</p>
+        <p class="neonText" id="playButton">Play</p>
     </div>
 
+    <!-- Czekanie na rozpoczęcie gry -->
     <div id="waitingBox" class="hidden">
         <p class="neonText">Wait...</p>
         <i class="fa fa-spinner fa-5x fa-pulse" id="spinnerIcon"></i>
     </div>
-    
 
+    <!-- Scena Three.js -->
     <div id="root"></div>
-    
+
 </body>
+
 </html>

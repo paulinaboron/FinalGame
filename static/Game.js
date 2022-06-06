@@ -3,7 +3,10 @@ class Game {
 
     constructor() {
         console.log("game");
+        this.gameStarted = false
+        this.score = 0
 
+        // Scena
         this.scene = new THREE.Scene()
         this.scene.fog = new THREE.Fog(0x000000, 10, 50)
         this.scenery = new Scenery(this.scene)
@@ -29,43 +32,31 @@ class Game {
         this.light.distance = 100
         this.scene.add(this.light)
 
-        
-
         this.scenery.makeFloor()
         this.scenery.makeNature()
-
-
         this.render()
-
-        this.gameStarted = false
-
-
-
-
     }
 
-    startGame(){
+    // Początek rozgrywki
+    startGame() {
         this.gameStarted = true
         this.camera.position.set(15, 5, 15)
         this.light.position.set(this.camera.position.x, 20, this.camera.position.z)
         this.light.intensity = 0
         this.light.target = this.camera
 
-        
         // Controls
         this.controls = new PointerLockControls(this.camera, this.renderer.domElement)
         this.controls.lock()
-        window.addEventListener('keydown', (e)=> this.onKeyDown(e), false)
+        window.addEventListener('keydown', (e) => this.onKeyDown(e), false)
         window.addEventListener('click', () => this.onMouseClick(), false)
-
 
         // Świetliki
         this.scenery.makeBugs()
-
     }
 
+    // Sterowanie klawiaturą
     onKeyDown(event) {
-        // console.log(event.code);
         switch (event.code) {
             case 'KeyW':
                 this.controls.moveForward(0.25)
@@ -85,18 +76,36 @@ class Game {
         }
 
         this.light.position.set(this.camera.position.x, 20, this.camera.position.z)
+
+        let posX = Math.round(this.camera.position.x)
+        let posZ = Math.round(this.camera.position.z)
+        this.checkPosition(posX, posZ)
     }
 
-    stopControls = () =>{
+    // Sprawdzenie położenia, możliwość zebrania robaczka
+    checkPosition(posX, posZ) {
+        let name = "Light" + posX + posZ
+        let obj = this.scene.getObjectByName(name, true);
+        if (obj != undefined) {
+            obj.collecting()
+        }
+    }
+
+    // Zatrzymanie gry
+    stopControls = () => {
         this.controls.unlock()
         this.controls.disconnect()
     }
 
-    onMouseClick(){
+    // Ponowienie gry
+    onMouseClick() {
         this.controls.lock()
         this.controls.connect()
     }
 
+    playerWon() {
+        console.log('wygrana');
+    }
 
     render = () => {
         requestAnimationFrame(this.render);
@@ -114,17 +123,7 @@ class Game {
             ));
             this.camera.lookAt(this.scene.position);
         }
-
-
-
-
-
-
-        // Update przy zmanie wielkości okna
-
-        // this.camera.aspect = window.innerWidth / window.innerHeight;
-        // this.camera.updateProjectionMatrix();
-        // this.renderer.setSize(window.innerWidth, window.innerHeight);
     }
+
 
 }
