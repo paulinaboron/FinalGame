@@ -26,10 +26,10 @@ class Game {
         this.light = new THREE.SpotLight(0xffffff, .5)
         this.light.position.set(0, 20, 0);
         this.light.penumbra = .9
-        this.light.angle = 1
+        this.light.angle = .7
         this.light.decay = 1
         this.light.focus = .8
-        this.light.distance = 100
+        // this.light.distance = 100
         this.scene.add(this.light)
 
         this.scenery.makeFloor()
@@ -53,6 +53,7 @@ class Game {
 
         // Świetliki
         this.scenery.makeBugs()
+        this.getBug()
     }
 
     // Sterowanie klawiaturą
@@ -103,8 +104,46 @@ class Game {
         this.controls.connect()
     }
 
-    playerWon() {
+    // Pobieranie ostatniego złapanego robaczka z servera
+    getBug() {
+        let intvl = setInterval(() => {
+
+            fetch("/GET_CAUGHT_BUG", { method: "post" })
+                .then(response => response.json())
+                .then(
+                    data => {
+                        console.log(data, "caught bug")
+                        if(data.bug == "END"){
+                            this.showScore()
+                            clearInterval(intvl)
+                        }
+                        else if (data.bug != '') {
+                            let obj = this.scene.getObjectByName(data.bug, true);
+                            obj.collectedByOtherPlayer()
+
+                        }
+
+                    }
+                )
+
+        }, 1000);
+
+    }
+
+    endGame() {
         console.log('wygrana');
+        const body = JSON.stringify({ bug: "END" })
+        const headers = { "Content-Type": "application/json" }
+        fetch("/BUG_CAUGHT", { method: "post", body, headers })
+    }
+
+    showScore(){
+        console.log(this.score);
+        if(this.score == 5){
+            ui.playerWon()
+        }else{
+            ui.playerLost()
+        }
     }
 
     render = () => {

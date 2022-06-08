@@ -28,8 +28,8 @@ class Scenery {
     makeBugs() {
         let scene = this.scene
         let cloneFbx = this.cloneFbx
-        let bugPositions
 
+        let bugPositions
         fetch("/GET_BUG_POSITIONS", { method: "post" })
             .then(response => response.json())
             .then(
@@ -57,6 +57,7 @@ class Scenery {
                 let bugLightName = "Light" + e[0] + e[1]
                 let bugLight = new BugLight(bugLightName, e[0], e[1])
                 scene.add(bugLight)
+                bugLight.target = clone
             });
 
         }, undefined, function (error) {

@@ -3,8 +3,11 @@ const app = express()
 const server = require('http').createServer(app)
 const fs = require('fs');
 var path = require("path")
+const bp = require('body-parser')
 const directoryPath = path.join(__dirname, 'static/models/nature');
 app.use(express.static('static'))
+app.use(bp.json())
+app.use(bp.urlencoded({ extended: true }))
 
 
 // Przesłanie pliku index.html
@@ -17,6 +20,9 @@ const Datastore = require('nedb');
 const bugPositions = new Datastore({
     filename: 'data.db',
     autoload: true
+});
+
+bugPositions.remove({}, { multi: true }, function (err, numRemoved) {
 });
 
 const data = [
@@ -37,8 +43,9 @@ const doc = {
 };
 
 bugPositions.insert(doc, function (err, newDoc) {
-    console.log("dodano dokument (obiekt):")
-    console.log(newDoc)
+    if(err){
+        console.log(err);
+    }
 });
 
 // przesłanie danych z położenie robaczków
@@ -66,17 +73,37 @@ let players = []
 
 // Dodawanie gracza przy logowaniu (jeszcze tego nie używamy)
 app.post("/ADD_USER", (req, res) => {
-    console.log(req.body, "body");
-
     if (players.length == 0) {
         players[0] = 'player1'
-        res.send(1)
+        res.send("1")
     } else if (players.length == 1) {
         players[1] = 'player2'
-        res.send(2)
+        res.send("2")
     } else {
-        res.send("gra już trwa")
+        res.send("3")
     }
+})
+
+// Zwraca liczbę graczy
+app.post("/GET_NR_OF_PLAYERS", (req, res) => {
+    res.send(JSON.stringify(players.length))
+})
+
+// Refresh tablicy graczy
+app.post("/REFRESH", (req, res) => {
+    players = []
+
+    caughtBug = ""
+})
+
+// Ostatnio złapany robaczek
+let caughtBug = ""
+
+app.post("/BUG_CAUGHT", (req, res)=>{
+    caughtBug = req.body.bug
+})
+app.post("/GET_CAUGHT_BUG", (req, res)=>{
+    res.send({bug: caughtBug})
 })
 
 server.listen(3000, () => {

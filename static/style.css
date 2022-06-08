@@ -131,6 +131,38 @@ i{
     padding: 25px;
 }
 
+#info{
+    position: absolute;
+    color: #fff;
+    top: 55px;
+    left: 55px;
+    line-height: 15px;
+    font-size: 16px;
+}
+
+#infoIcon:hover ~ #info{
+    visibility: visible;
+}
+
+#refreshIcon{
+    position: absolute;
+    top: 0px;
+    left: 50px;
+    padding: 25px;
+}
+
+#refresh{
+    position: absolute;
+    color: #fff;
+    top: 55px;
+    left: 100px;
+    font-size: 16px;
+}
+
+#refreshIcon:hover ~ #refresh{
+    visibility: visible;
+}
+
 #scoreDiv{
     position: absolute;
     top: 0px;
@@ -155,18 +187,7 @@ i{
         0 0 90px #0fa;
 }
 
-#info{
-    position: absolute;
-    color: #fff;
-    top: 55px;
-    left: 55px;
-    line-height: 15px;
-    font-size: 16px;
-}
 
-#infoIcon:hover ~ #info{
-    visibility: visible;
-}
 
 
 /* Flickering animation */
