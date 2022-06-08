@@ -4,7 +4,7 @@ const fs = require('fs');
 var path = require("path")
 const bp = require('body-parser')
 const directoryPath = path.join(__dirname, 'static/models/nature');
-app.use(express.static('static'))
+app.use(express.static(__dirname + 'static'))
 app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
 
