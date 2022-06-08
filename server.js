@@ -110,6 +110,6 @@ app.post("/GET_CAUGHT_BUG", (req, res)=>{
     res.send(JSON.stringify({bug: caughtBug, gameEnded: gameEnded}))
 })
 
-server.listen(3000, () => {
+server.listen(process.env.PORT || 3000, () => {
     console.log("Server runnig on http://localhost:3000/");
 })
