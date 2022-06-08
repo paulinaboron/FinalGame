@@ -1,6 +1,5 @@
 const express = require('express')
 const app = express()
-const server = require('http').createServer(app)
 const fs = require('fs');
 var path = require("path")
 const bp = require('body-parser')
@@ -110,6 +109,6 @@ app.post("/GET_CAUGHT_BUG", (req, res)=>{
     res.send(JSON.stringify({bug: caughtBug, gameEnded: gameEnded}))
 })
 
-server.listen(process.env.PORT || 3000, () => {
+app.listen(process.env.PORT || 3000, () => {
     console.log("Server runnig on http://localhost:3000/");
 })
