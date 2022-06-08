@@ -8,20 +8,10 @@ class Ui {
     }
 
     playButtonClick() {
-        let username = document.getElementById("usernameInput").value
-        if (username == '') {     // do testowania (nic nie wpisuj do inputa), potem usuniemy
-            document.getElementById("usernameInput").style.display = "none"
-            document.getElementById("neonBox").classList.add("hidden")
-            document.getElementById("scoreDiv").classList.remove("hidden")
-            document.getElementById("refreshIcon").classList.add("hidden")
-            game.startGame()
-
-        } else {        // zwykłe logowanie
-            document.getElementById("usernameInput").style.display = "none"
-            document.getElementById("neonBox").classList.add("hidden")
-            document.getElementById("waitingBox").classList.remove("hidden")
-            net.addUser()
-        }
+        document.getElementById("usernameInput").style.display = "none"
+        document.getElementById("neonBox").classList.add("hidden")
+        document.getElementById("waitingBox").classList.remove("hidden")
+        net.addUser()
     }
 
     startGame() {
@@ -35,10 +25,10 @@ class Ui {
         document.getElementById("score").innerText = game.score + "/3"
 
         if (game.score == 3) {
-            const body = JSON.stringify({gameEnded: true})
+            const body = JSON.stringify({ gameEnded: true })
             const headers = { "Content-Type": "application/json" }
             fetch("/END_GAME", { method: "post", body, headers })
-            // game.stopGame()
+            game.stopGame()
         }
     }
 
