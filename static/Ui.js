@@ -9,7 +9,6 @@ class Ui {
 
     playButtonClick() {
         let username = document.getElementById("usernameInput").value
-        console.log(username);
         if (username == '') {     // do testowania (nic nie wpisuj do inputa), potem usuniemy
             document.getElementById("usernameInput").style.display = "none"
             document.getElementById("neonBox").classList.add("hidden")
@@ -33,21 +32,25 @@ class Ui {
     }
 
     updateScore() {
-        document.getElementById("score").innerText = game.score + "/5"
-        if (game.score == 5) {
-            game.endGame()
+        document.getElementById("score").innerText = game.score + "/3"
+
+        if (game.score == 3) {
+            const body = JSON.stringify({gameEnded: true})
+            const headers = { "Content-Type": "application/json" }
+            fetch("/END_GAME", { method: "post", body, headers })
+            // game.stopGame()
         }
     }
 
-    playerWon(){
-        console.log('wygrałeś');
+    playerWon() {
+        document.getElementById("winner").classList.remove("hidden")
     }
 
-    playerLost(){
-        console.log('przegrałeś');
+    playerLost() {
+        document.getElementById("loser").classList.remove("hidden")
     }
 
-    refreshIconClick(){
+    refreshIconClick() {
         fetch("/REFRESH", { method: "post" })
     }
 

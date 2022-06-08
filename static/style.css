@@ -187,6 +187,14 @@ i{
         0 0 90px #0fa;
 }
 
+#winner, #loser{
+    position: absolute;
+    text-align: center;
+    width: 500px;
+    top: 250px;
+    left: calc(50% - 250px);
+}
+
 
 
 

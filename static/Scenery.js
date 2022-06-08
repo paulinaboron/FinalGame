@@ -50,7 +50,7 @@ class Scenery {
             bugPositions.forEach(e => {
                 let clone = cloneFbx(object)
                 clone.scale.set(.005, .005, .005)
-                clone.position.set(e[0], 4, e[1])
+                clone.position.set(e[0], 3, e[1])
                 clone.name = "Bug" + e[0] + e[1]
                 scene.add(clone);
 

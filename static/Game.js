@@ -8,7 +8,7 @@ class Game {
 
         // Scena
         this.scene = new THREE.Scene()
-        this.scene.fog = new THREE.Fog(0x000000, 10, 50)
+        // this.scene.fog = new THREE.Fog(0x000000, 10, 50)
         this.scenery = new Scenery(this.scene)
 
         // Camera
@@ -106,21 +106,20 @@ class Game {
 
     // Pobieranie ostatniego złapanego robaczka z servera
     getBug() {
-        let intvl = setInterval(() => {
+        this.intvl = setInterval(() => {
 
             fetch("/GET_CAUGHT_BUG", { method: "post" })
                 .then(response => response.json())
                 .then(
                     data => {
-                        console.log(data, "caught bug")
-                        if(data.bug == "END"){
-                            this.showScore()
-                            clearInterval(intvl)
-                        }
-                        else if (data.bug != '') {
+                    
+                        if (data.bug != null) {
                             let obj = this.scene.getObjectByName(data.bug, true);
                             obj.collectedByOtherPlayer()
+                        }
 
+                        if(data.gameEnded){
+                            this.stopGame()
                         }
 
                     }
@@ -130,16 +129,14 @@ class Game {
 
     }
 
-    endGame() {
-        console.log('wygrana');
-        const body = JSON.stringify({ bug: "END" })
-        const headers = { "Content-Type": "application/json" }
-        fetch("/BUG_CAUGHT", { method: "post", body, headers })
+    stopGame(){
+        clearInterval(this.intvl)
+        this.stopControls()
+        this.showScore()
     }
 
     showScore(){
-        console.log(this.score);
-        if(this.score == 5){
+        if(this.score == 3){        
             ui.playerWon()
         }else{
             ui.playerLost()

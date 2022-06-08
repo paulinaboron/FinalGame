@@ -31,7 +31,7 @@ class BugLight extends THREE.SpotLight {
 
             ui.updateScore()
 
-            const body = JSON.stringify({ bug: this.name })
+            const body = JSON.stringify({bug: this.name})
             const headers = { "Content-Type": "application/json" }
             fetch("/BUG_CAUGHT", { method: "post", body, headers })
         }
@@ -39,15 +39,19 @@ class BugLight extends THREE.SpotLight {
 
     // Gdy robaczek został zebrany przez drugiego gracza
     collectedByOtherPlayer() {
+
+        this.color = { r: 1, g: 0, b: 0 }
         if (this.caught == false) {
             
             this.caught = true
             this.color = { r: 1, g: 0, b: 0 }
+
+            // usuwanie robaczka ze sceny
             let bugName = "Bug" + this.posX + this.posZ
             let bug = game.scene.getObjectByName(bugName, true);
             game.scene.remove(bug)
 
-            const body = JSON.stringify({ bug: "" })
+            const body = JSON.stringify({bug: null})
             const headers = { "Content-Type": "application/json" }
             fetch("/BUG_CAUGHT", { method: "post", body, headers })
         }

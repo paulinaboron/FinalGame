@@ -92,18 +92,22 @@ app.post("/GET_NR_OF_PLAYERS", (req, res) => {
 // Refresh tablicy graczy
 app.post("/REFRESH", (req, res) => {
     players = []
-
-    caughtBug = ""
+    gameEnded = false
+    caughtBug = null
 })
 
 // Ostatnio złapany robaczek
-let caughtBug = ""
+let caughtBug = null
+let gameEnded = false
 
+app.post("/END_GAME", (req, res)=>{
+    gameEnded = req.body.gameEnded
+})
 app.post("/BUG_CAUGHT", (req, res)=>{
     caughtBug = req.body.bug
 })
 app.post("/GET_CAUGHT_BUG", (req, res)=>{
-    res.send({bug: caughtBug})
+    res.send(JSON.stringify({bug: caughtBug, gameEnded: gameEnded}))
 })
 
 server.listen(3000, () => {

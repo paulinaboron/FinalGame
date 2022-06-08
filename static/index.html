@@ -49,15 +49,15 @@
         <p>Resume: <b>CLICK</b></p>
     </div>
 
-        <!-- Refresh w rogu -->
-        <div id="refreshIcon"><i class="fa fa-refresh fa-2x"></i></div>
-        <div id="refresh" class="hidden">
-            <p><b>Refresh</b></p>
-        </div>
+    <!-- Refresh w rogu -->
+    <div id="refreshIcon"><i class="fa fa-refresh fa-2x"></i></div>
+    <div id="refresh" class="hidden">
+        <p><b>Refresh</b></p>
+    </div>
 
     <!-- Punkty w rogu -->
     <div id="scoreDiv" class="hidden">
-        <p id="score">0/5</p>
+        <p id="score">0/3</p>
         <i class="fa fa-bug fa-2x"></i>
     </div>
 
@@ -73,6 +73,10 @@
         <p class="neonText">Wait...</p>
         <i class="fa fa-spinner fa-5x fa-pulse" id="spinnerIcon"></i>
     </div>
+
+    <!-- Wygranie / Przegranie gry -->
+    <p class="neonText hidden" id="winner">You won !!!</p>
+    <p class="neonText hidden" id="loser">You lost :(</p>
 
     <!-- Scena Three.js -->
     <div id="root"></div>
