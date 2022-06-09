@@ -93,6 +93,7 @@ app.post("/REFRESH", (req, res) => {
     players = []
     gameEnded = false
     caughtBug = null
+    res.end()
 })
 
 // Ostatnio złapany robaczek
@@ -101,9 +102,11 @@ let gameEnded = false
 
 app.post("/END_GAME", (req, res)=>{
     gameEnded = req.body.gameEnded
+    res.end()
 })
 app.post("/BUG_CAUGHT", (req, res)=>{
     caughtBug = req.body.bug
+    res.end()
 })
 app.post("/GET_CAUGHT_BUG", (req, res)=>{
     res.send(JSON.stringify({bug: caughtBug, gameEnded: gameEnded}))
