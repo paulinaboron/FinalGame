@@ -1,6 +1,6 @@
 class BugLight extends THREE.SpotLight {
 
-    constructor(name, posX, posZ) {
+    constructor(name, posX, posZ, color) {
         super()
 
         // Nazwa to zawsze "Light" i pozycja obiektu (np. dla 10 i -5 będzie "Light10-5")
@@ -13,7 +13,9 @@ class BugLight extends THREE.SpotLight {
 
         // Ustawienia światła
         this.position.set(posX, 10, posZ);
-        this.color = { r: 1, g: 1, b: 0 }
+        // this.color = { r: 1, g: 1, b: 0 }
+        console.log(color);
+        this.color = color
         this.angle = 0.15
         this.penumbra = 1
 
@@ -23,7 +25,7 @@ class BugLight extends THREE.SpotLight {
     collecting() {
         if (this.caught == false) {
             this.caught = true
-            this.color = { r: 0, g: 1, b: 1 }
+            this.color = { r: 0, g: 0, b: 0 }
             let bugName = "Bug" + this.posX + this.posZ
             let bug = game.scene.getObjectByName(bugName, true);
             game.scene.remove(bug)
@@ -31,7 +33,7 @@ class BugLight extends THREE.SpotLight {
 
             ui.updateScore()
 
-            const body = JSON.stringify({bug: this.name})
+            const body = JSON.stringify({ bug: this.name })
             const headers = { "Content-Type": "application/json" }
             fetch("/BUG_CAUGHT", { method: "post", body, headers })
         }
@@ -42,7 +44,7 @@ class BugLight extends THREE.SpotLight {
 
         this.color = { r: 1, g: 0, b: 0 }
         if (this.caught == false) {
-            
+
             this.caught = true
             this.color = { r: 1, g: 0, b: 0 }
 
@@ -51,7 +53,7 @@ class BugLight extends THREE.SpotLight {
             let bug = game.scene.getObjectByName(bugName, true);
             game.scene.remove(bug)
 
-            const body = JSON.stringify({bug: null})
+            const body = JSON.stringify({ bug: null })
             const headers = { "Content-Type": "application/json" }
             fetch("/BUG_CAUGHT", { method: "post", body, headers })
         }

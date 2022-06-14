@@ -33,11 +33,13 @@ class Ui {
     }
 
     playerWon() {
-        document.getElementById("winner").classList.remove("hidden")
+        if (document.getElementById("loser").classList.contains("hidden"))
+            document.getElementById("winner").classList.remove("hidden")
     }
 
     playerLost() {
-        document.getElementById("loser").classList.remove("hidden")
+        if (document.getElementById("winner").classList.contains("hidden"))
+            document.getElementById("loser").classList.remove("hidden")
     }
 
     refreshIconClick() {

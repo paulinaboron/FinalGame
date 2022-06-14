@@ -55,7 +55,7 @@ class Scenery {
                 scene.add(clone);
 
                 let bugLightName = "Light" + e[0] + e[1]
-                let bugLight = new BugLight(bugLightName, e[0], e[1])
+                let bugLight = new BugLight(bugLightName, e[0], e[1], e[2])
                 scene.add(bugLight)
                 bugLight.target = clone
             });

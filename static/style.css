@@ -1,5 +1,4 @@
-
-.helper{
+.helper {
     position: absolute;
 }
 
@@ -12,7 +11,7 @@ body {
     box-sizing: border-box;
 }
 
-i{
+i {
     color: white;
     text-shadow:
         0 0 4px #fff,
@@ -89,7 +88,7 @@ i{
         inset 0 0 1.3rem #bc13fe;
 }
 
-#waitingBox{
+#waitingBox {
     position: absolute;
     top: 250px;
     left: calc(50% - 250px);
@@ -117,21 +116,21 @@ i{
     transition: 2s;
 }
 
-#usernameInput:focus{
+#usernameInput:focus {
     box-shadow:
-    0 0 11px #fff,
-    0 0 50px #bc13fe,
-    inset 0 0 .5rem #bc13fe;
+        0 0 11px #fff,
+        0 0 50px #bc13fe,
+        inset 0 0 .5rem #bc13fe;
 }
 
-#infoIcon{
+#infoIcon {
     position: absolute;
     top: 0px;
     left: 0px;
     padding: 25px;
 }
 
-#info{
+#info {
     position: absolute;
     color: #fff;
     top: 55px;
@@ -140,18 +139,18 @@ i{
     font-size: 16px;
 }
 
-#infoIcon:hover ~ #info{
+#infoIcon:hover~#info {
     visibility: visible;
 }
 
-#refreshIcon{
+#refreshIcon {
     position: absolute;
     top: 0px;
     left: 50px;
     padding: 25px;
 }
 
-#refresh{
+#refresh {
     position: absolute;
     color: #fff;
     top: 55px;
@@ -159,11 +158,34 @@ i{
     font-size: 16px;
 }
 
-#refreshIcon:hover ~ #refresh{
+#refreshIcon:hover~#refresh {
     visibility: visible;
 }
 
-#scoreDiv{
+#colorsDiv {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    padding: 0px 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#colors {
+    color: white;
+    font-weight: 800;
+    font-size: 25px;
+    text-shadow:
+        0 0 4px #fff,
+        0 0 11px #fff,
+        0 0 40px #0fa,
+        0 0 80px #0fa,
+        0 0 90px #0fa;
+}
+
+#scoreDiv {
     position: absolute;
     top: 0px;
     right: 0px;
@@ -174,7 +196,7 @@ i{
     align-items: center;
 }
 
-#score{
+#score {
     color: white;
     font-weight: 800;
     font-size: 25px;
@@ -187,7 +209,8 @@ i{
         0 0 90px #0fa;
 }
 
-#winner, #loser{
+#winner,
+#loser {
     position: absolute;
     text-align: center;
     width: 500px;
@@ -200,7 +223,13 @@ i{
 
 /* Flickering animation */
 @keyframes flicker {
-    0%, 18%, 22%, 25%, 53%, 100% {
+
+    0%,
+    18%,
+    22%,
+    25%,
+    53%,
+    100% {
         text-shadow:
             0 0 4px #fff,
             0 0 11px #fff,
@@ -211,11 +240,13 @@ i{
             0 0 100px #0fa,
             0 0 150px #0fa;
     }
-    20%, 24% {
+
+    20%,
+    24% {
         text-shadow: none;
     }
 }
 
-.hidden{
+.hidden {
     visibility: hidden;
 }

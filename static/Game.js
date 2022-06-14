@@ -42,7 +42,7 @@ class Game {
         this.gameStarted = true
         this.camera.position.set(15, 5, 15)
         this.light.position.set(this.camera.position.x, 20, this.camera.position.z)
-        this.light.intensity = 0
+        this.light.intensity = 1
         this.light.target = this.camera
 
         // Controls
@@ -50,6 +50,50 @@ class Game {
         this.controls.lock()
         window.addEventListener('keydown', (e) => this.onKeyDown(e), false)
         window.addEventListener('click', () => this.onMouseClick(), false)
+
+        this.index = 0
+
+        this.colorArray = [{ r: 1, g: 1, b: 1 }, { r: 1, g: 1, b: 0 }, { r: 0, g: 0, b: 1 }]
+
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [
+                    array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        this.colorArray = shuffle(this.colorArray);
+
+        let colorNames = []
+
+        this.colorArray.forEach(element => {
+            switch (JSON.stringify(element)) {
+                case JSON.stringify({ r: 1, g: 1, b: 1 }):
+                    colorNames.push("white")
+                    break
+                case JSON.stringify({ r: 1, g: 1, b: 0 }):
+                    colorNames.push("yellow")
+                    break
+                case JSON.stringify({ r: 0, g: 0, b: 1 }):
+                    colorNames.push("blue")
+                    break
+                default:
+                    break;
+            }
+        });
+
+        // alert(JSON.stringify(this.colorArray[0]) + JSON.stringify(this.colorArray[1]) + JSON.stringify(this.colorArray[2]))
+        // alert(colorNames[0] + colorNames[1] + colorNames[2])
+
+        document.getElementById("colors").innerText = (colorNames[0] + " " + colorNames[1] + " " + colorNames[2]).toUpperCase()
+        document.getElementById("colorsDiv").classList.remove("hidden")
+        setTimeout(function () {
+            document.getElementById("colorsDiv").classList.add("hidden")
+        }, 5000);
 
         // Świetliki
         this.scenery.makeBugs()
@@ -87,8 +131,13 @@ class Game {
     checkPosition(posX, posZ) {
         let name = "Light" + posX + posZ
         let obj = this.scene.getObjectByName(name, true);
+
         if (obj != undefined) {
-            obj.collecting()
+            console.log(obj.color);
+            if (JSON.stringify(obj.color) == JSON.stringify(this.colorArray[this.index])) {
+                obj.collecting()
+                this.index++
+            }
         }
     }
 
@@ -112,13 +161,13 @@ class Game {
                 .then(response => response.json())
                 .then(
                     data => {
-                    
+
                         if (data.bug != null) {
                             let obj = this.scene.getObjectByName(data.bug, true);
                             obj.collectedByOtherPlayer()
                         }
 
-                        if(data.gameEnded){
+                        if (data.gameEnded) {
                             this.stopGame()
                         }
 
@@ -129,16 +178,16 @@ class Game {
 
     }
 
-    stopGame(){
+    stopGame() {
         clearInterval(this.intvl)
         this.stopControls()
         this.showScore()
     }
 
-    showScore(){
-        if(this.score == 3){        
+    showScore() {
+        if (this.score == 3) {
             ui.playerWon()
-        }else{
+        } else {
             ui.playerLost()
         }
     }

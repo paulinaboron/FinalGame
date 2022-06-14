@@ -25,16 +25,16 @@ bugPositions.remove({}, { multi: true }, function (err, numRemoved) {
 });
 
 const data = [
-    [-40, -40],
-    [-40, 40],
-    [40, 40],
-    [40, -40],
-    [0, 47],
-    [-3, 30],
-    [2, -15],
-    [30, -20],
-    [-30, 3],
-    [-15, 10],
+    [-40, -40, { r: 1, g: 1, b: 1 }],
+    [-40, 40, { r: 1, g: 1, b: 0 }],
+    [40, 40, { r: 0, g: 0, b: 1 }],
+    [40, -40, { r: 1, g: 1, b: 1 }],
+    [0, 47, { r: 1, g: 1, b: 0 }],
+    [-3, 30, { r: 0, g: 0, b: 1 }],
+    [2, -15, { r: 1, g: 1, b: 1 }],
+    [30, -20, { r: 1, g: 1, b: 0 }],
+    [-30, 3, { r: 0, g: 0, b: 1 }],
+    [-15, 10, { r: 1, g: 1, b: 1 }],
 ]
 
 const doc = {
@@ -42,7 +42,7 @@ const doc = {
 };
 
 bugPositions.insert(doc, function (err, newDoc) {
-    if(err){
+    if (err) {
         console.log(err);
     }
 });
@@ -100,16 +100,16 @@ app.post("/REFRESH", (req, res) => {
 let caughtBug = null
 let gameEnded = false
 
-app.post("/END_GAME", (req, res)=>{
+app.post("/END_GAME", (req, res) => {
     gameEnded = req.body.gameEnded
     res.end()
 })
-app.post("/BUG_CAUGHT", (req, res)=>{
+app.post("/BUG_CAUGHT", (req, res) => {
     caughtBug = req.body.bug
     res.end()
 })
-app.post("/GET_CAUGHT_BUG", (req, res)=>{
-    res.send(JSON.stringify({bug: caughtBug, gameEnded: gameEnded}))
+app.post("/GET_CAUGHT_BUG", (req, res) => {
+    res.send(JSON.stringify({ bug: caughtBug, gameEnded: gameEnded }))
 })
 
 app.listen(process.env.PORT || 3000, () => {
